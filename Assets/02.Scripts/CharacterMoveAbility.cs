@@ -9,6 +9,9 @@ public class CharacterMoveAbility : MonoBehaviour
     private Rigidbody rb;
     Animator _animator;
 
+    private float lastMoveX = 0f;
+    private float lastMoveZ = 0f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -24,8 +27,14 @@ public class CharacterMoveAbility : MonoBehaviour
 
         float speedValue = move.magnitude > 0 ? 1f : 0f;
 
-        _animator.SetFloat("Horizontal", Mathf.Lerp(_animator.GetFloat("Horizontal"), moveX, Time.deltaTime * 8));
-        _animator.SetFloat("Vertical", Mathf.Lerp(_animator.GetFloat("Vertical"), moveZ, Time.deltaTime * 8));
+        if (speedValue > 0)
+        {
+            lastMoveX = moveX;
+            lastMoveZ = moveZ;
+        }
+
+        _animator.SetFloat("Horizontal", Mathf.Lerp(_animator.GetFloat("Horizontal"), speedValue > 0 ? moveX : lastMoveX, Time.deltaTime * 8));
+        _animator.SetFloat("Vertical", Mathf.Lerp(_animator.GetFloat("Vertical"), speedValue > 0 ? moveZ : lastMoveZ, Time.deltaTime * 8));
         _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), speedValue, Time.deltaTime * 8));
 
         rb.MovePosition(transform.position + move * moveSpeed * Time.deltaTime);
