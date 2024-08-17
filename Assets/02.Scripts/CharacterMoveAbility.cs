@@ -37,6 +37,6 @@ public class CharacterMoveAbility : MonoBehaviour
         _animator.SetFloat("Vertical", Mathf.Lerp(_animator.GetFloat("Vertical"), speedValue > 0 ? moveZ : lastMoveZ, Time.deltaTime * 8));
         _animator.SetFloat("Speed", Mathf.Lerp(_animator.GetFloat("Speed"), speedValue, Time.deltaTime * 8));
 
-        rb.MovePosition(transform.position + move * moveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + move * moveSpeed * Time.deltaTime);
     }
 }
