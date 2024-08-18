@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteraction : MonoBehaviour
+public class PlayerInteractionAbility : MonoBehaviour
 {
     public Transform handPosition; 
     private List<GameObject> holdBreads = new List<GameObject>();

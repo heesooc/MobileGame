@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMoveAbility : MonoBehaviour
+public class PlayerMoveAbility : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public VariableJoystick variableJoystick;

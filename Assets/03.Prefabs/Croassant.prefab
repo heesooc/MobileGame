@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6485296207072063106}
   - component: {fileID: 1695374584124150139}
   - component: {fileID: 5857976017721209913}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Croassant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
