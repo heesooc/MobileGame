@@ -11,6 +11,7 @@ public class CharacterMoveAbility : MonoBehaviour
 
     private float lastMoveX = 0f;
     private float lastMoveZ = 0f;
+    private float inputThreshold = 0.1f;
 
     void Start()
     {
@@ -25,13 +26,14 @@ public class CharacterMoveAbility : MonoBehaviour
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
-        float speedValue = move.magnitude > 0 ? 1f : 0f;
-
-        if (speedValue > 0)
+        if (Mathf.Abs(moveX) > inputThreshold || Mathf.Abs(moveZ) > inputThreshold)
         {
             lastMoveX = moveX;
             lastMoveZ = moveZ;
         }
+
+
+        float speedValue = (Mathf.Abs(moveX) > inputThreshold || Mathf.Abs(moveZ) > inputThreshold) ? 1f : 0f;
 
         _animator.SetFloat("Horizontal", Mathf.Lerp(_animator.GetFloat("Horizontal"), speedValue > 0 ? moveX : lastMoveX, Time.deltaTime * 8));
         _animator.SetFloat("Vertical", Mathf.Lerp(_animator.GetFloat("Vertical"), speedValue > 0 ? moveZ : lastMoveZ, Time.deltaTime * 8));
