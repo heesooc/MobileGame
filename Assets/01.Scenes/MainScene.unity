@@ -7205,6 +7205,7 @@ GameObject:
   - component: {fileID: 6394725530233985147}
   - component: {fileID: 6394725530233985145}
   - component: {fileID: 6394725530233985146}
+  - component: {fileID: 6394725530233985148}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -7347,6 +7348,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7
   variableJoystick: {fileID: 1342785706}
+--- !u!114 &6394725530233985148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6049865170506187469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18bf8b1ba05d81346ad6dd509c8bee07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handPosition: {fileID: 5753962473409613938}
 --- !u!1 &6420225214871770048
 GameObject:
   m_ObjectHideFlags: 0
