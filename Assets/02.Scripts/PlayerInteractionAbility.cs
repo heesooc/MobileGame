@@ -24,7 +24,10 @@ public class PlayerInteractionAbility : MonoBehaviour
                 if (bread != null)
                 {
                     bread.transform.SetParent(handPosition);
-                    bread.transform.localPosition = Vector3.up * holdBreads.Count * 0.2f; 
+
+                    Vector3 localPosition = new Vector3(-holdBreads.Count * 0.4f, 0, 0);
+                    bread.transform.localPosition = localPosition;
+                    bread.transform.localRotation = Quaternion.Euler(0, 180, -90);
                     holdBreads.Add(bread);
                     _animator.SetBool("IsHold", true);
                 }
