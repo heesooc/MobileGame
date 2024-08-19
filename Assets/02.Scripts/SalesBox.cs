@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class SalesBox : MonoBehaviour
 {
-    public Transform breadContainer; 
-    public Vector3 breadOffset = new Vector3(0.5f, 0, 0); 
+    public Transform breadContainer;
+    public Vector3 startPosition = new Vector3(-5.4f, 2f, 6f);
+    public Vector3 widthOffset = new Vector3(0.7f, 0, 0);
+    public Vector3 heightOffset = new Vector3(0, 0, -0.5f);
+    public int itemsPerWidth = 2;
+
     private List<GameObject> placedBreads = new List<GameObject>();
 
     private void OnTriggerEnter(Collider other)
@@ -19,6 +23,8 @@ public class SalesBox : MonoBehaviour
 
     private IEnumerator PlaceAllBreads(PlayerInteractionAbility player)
     {
+        int index = 0;
+
         while (player.HasBread())
         {
             GameObject bread = player.RemoveBread();
@@ -26,12 +32,16 @@ public class SalesBox : MonoBehaviour
             {
                 bread.transform.SetParent(null);
 
-                Vector3 position = breadContainer.position + breadOffset * placedBreads.Count;
-                Quaternion rotation = Quaternion.Euler(0, -50, 0); 
+                int width = index / itemsPerWidth;
+                int height = index % itemsPerWidth;
+
+                Vector3 position = startPosition + (height * widthOffset) + (width * heightOffset);
+                Quaternion rotation = Quaternion.Euler(0, -40, 0); 
 
                 bread.transform.position = position; 
                 bread.transform.rotation = rotation;
                 placedBreads.Add(bread);
+                index++;
                 yield return new WaitForSeconds(0.15f);
             }
         }
