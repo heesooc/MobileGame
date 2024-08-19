@@ -57,7 +57,7 @@ public class PlayerInteractionAbility : MonoBehaviour
                 Quaternion targetRotation = initialHandRotation * Quaternion.Euler(0, 180, 0);
 
                 float timer = 0f;
-                float lerpDuration = 0.5f;
+                float lerpDuration = 0.15f;
 
                 while (timer < lerpDuration)
                 {
@@ -79,5 +79,36 @@ public class PlayerInteractionAbility : MonoBehaviour
             }
         }
         _animator.speed = 1f;
+        CheckIfAllBreadsPlaced();
+    }
+
+    public bool HasBread()
+    {
+        return holdBreads.Count > 0;
+    }
+
+    public GameObject RemoveBread()
+    {
+        if (holdBreads.Count > 0)
+        {
+            GameObject bread = holdBreads[holdBreads.Count - 1];
+            holdBreads.RemoveAt(holdBreads.Count - 1);
+
+            if (holdBreads.Count == 0)
+            {
+                _animator.SetBool("IsHold", false);
+            }
+            return bread;
+        }
+        
+        return null;
+    }
+
+    private void CheckIfAllBreadsPlaced()
+    {
+        if (holdBreads.Count == 0)
+        {
+            _animator.SetBool("IsHold", false);
+        }
     }
 }
