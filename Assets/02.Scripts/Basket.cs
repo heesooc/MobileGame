@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Basket : MonoBehaviour
+public class Basket : MonoBehaviour, IBreadProvider
 {
     public int maxAmount = 8;
     private List<GameObject> breads = new List<GameObject>();

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class SalesBox : MonoBehaviour
+public class SalesBox : MonoBehaviour, IBreadProvider
 {
     public Transform breadContainer;
     public Vector3 startPosition = new Vector3(-5.4f, 2f, 6f);
@@ -10,7 +11,8 @@ public class SalesBox : MonoBehaviour
     public Vector3 heightOffset = new Vector3(0, 0, -0.5f);
     public int itemsPerWidth = 2;
 
-    private List<GameObject> placedBreads = new List<GameObject>();
+    private List<GameObject> placeBreads = new List<GameObject>();
+    private List<GameObject> breads = new List<GameObject>();
 
     private void OnTriggerEnter(Collider other)
     {
@@ -40,10 +42,21 @@ public class SalesBox : MonoBehaviour
 
                 bread.transform.position = position; 
                 bread.transform.rotation = rotation;
-                placedBreads.Add(bread);
+                placeBreads.Add(bread);
                 index++;
                 yield return new WaitForSeconds(0.15f);
             }
         }
+    }
+
+    public GameObject RemoveBread()
+    {
+        if (breads.Count > 0)
+        {
+            GameObject bread = breads[0];
+            breads.RemoveAt(0);
+            return bread;
+        }
+        return null;
     }
 }

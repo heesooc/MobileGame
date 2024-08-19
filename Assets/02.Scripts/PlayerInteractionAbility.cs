@@ -19,17 +19,14 @@ public class PlayerInteractionAbility : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Basket"))
+        IBreadProvider breadProvider = other.GetComponent<IBreadProvider>();
+        if (breadProvider != null)
         {
-            Basket basket = other.GetComponent<Basket>();
-            if (basket != null)
-            {
-                StartCoroutine(StackBreadCoroutine(basket));
-            }
+            StartCoroutine(StackBreadCoroutine(breadProvider));
         }
     }
 
-    private IEnumerator StackBreadCoroutine(Basket basket)
+    public IEnumerator StackBreadCoroutine(IBreadProvider breadProvider)
     {
         _animator.SetBool("IsHold", true);
 
@@ -45,7 +42,7 @@ public class PlayerInteractionAbility : MonoBehaviour
 
         while (true)
         {
-            GameObject bread = basket.RemoveBread();
+            GameObject bread = breadProvider.RemoveBread();
             if (bread != null)
             {
                 holdBreads.Add(bread);
@@ -104,7 +101,7 @@ public class PlayerInteractionAbility : MonoBehaviour
         return null;
     }
 
-    private void CheckIfAllBreadsPlaced()
+    public void CheckIfAllBreadsPlaced()
     {
         if (holdBreads.Count == 0)
         {
