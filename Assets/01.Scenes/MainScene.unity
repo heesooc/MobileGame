@@ -6751,6 +6751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b283186d637a94b80bbc4382d046df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  breadContainer: {fileID: 3880361981682689449}
+  breadOffset: {x: 0.5, y: 0, z: 0}
 --- !u!23 &4617464176096072480
 MeshRenderer:
   m_ObjectHideFlags: 0
