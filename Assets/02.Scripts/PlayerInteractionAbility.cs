@@ -8,9 +8,13 @@ public class PlayerInteractionAbility : MonoBehaviour
     private List<GameObject> holdBreads = new List<GameObject>();
     private Animator _animator;
 
+    private Vector3 initialHandPosition;
+    private Quaternion initialHandRotation;
+    private bool hasInitializedHandPosition = false;
+
     private void Start()
     {
-        _animator = GetComponentInChildren<Animator>(); 
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,18 +24,60 @@ public class PlayerInteractionAbility : MonoBehaviour
             Basket basket = other.GetComponent<Basket>();
             if (basket != null)
             {
-                GameObject bread = basket.RemoveBread();
-                if (bread != null)
-                {
-                    bread.transform.SetParent(handPosition);
-
-                    Vector3 localPosition = new Vector3(-holdBreads.Count * 0.4f, 0, 0);
-                    bread.transform.localPosition = localPosition;
-                    bread.transform.localRotation = Quaternion.Euler(0, 180, -90);
-                    holdBreads.Add(bread);
-                    _animator.SetBool("IsHold", true);
-                }
+                StartCoroutine(StackBreadCoroutine(basket));
             }
         }
+    }
+
+    private IEnumerator StackBreadCoroutine(Basket basket)
+    {
+        _animator.SetBool("IsHold", true);
+
+        yield return new WaitForSeconds(0.5f);
+        _animator.speed = 0f;
+
+        if (!hasInitializedHandPosition)
+        {
+            initialHandPosition = handPosition.position;
+            initialHandRotation = handPosition.rotation;
+            hasInitializedHandPosition = true;
+        }
+
+        while (true)
+        {
+            GameObject bread = basket.RemoveBread();
+            if (bread != null)
+            {
+                holdBreads.Add(bread);
+                
+                Vector3 startPosition = bread.transform.position;
+                Quaternion startRotation = bread.transform.rotation;
+
+                Vector3 targetPosition = initialHandPosition + new Vector3(0, holdBreads.Count * 0.4f, 0);
+                Quaternion targetRotation = initialHandRotation * Quaternion.Euler(0, 180, 0);
+
+                float timer = 0f;
+                float lerpDuration = 0.5f;
+
+                while (timer < lerpDuration)
+                {
+                    bread.transform.position = Vector3.Lerp(startPosition, targetPosition, timer / lerpDuration);
+                    bread.transform.rotation = Quaternion.Lerp(startRotation, targetRotation, timer / lerpDuration);
+                    timer += Time.deltaTime;
+                    yield return null;
+                }
+
+                bread.transform.position = targetPosition;
+                bread.transform.rotation = targetRotation;
+                bread.transform.SetParent(handPosition, true);
+
+                yield return new WaitForSeconds(0.001f); 
+            }
+            else
+            {
+                break; 
+            }
+        }
+        _animator.speed = 1f;
     }
 }
