@@ -33,7 +33,7 @@ public class PlayerInteractionAbility : MonoBehaviour
     {
         _animator.SetBool("IsHold", true);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         _animator.speed = 0f;
 
         if (!hasInitializedHandPosition)

@@ -24,9 +24,19 @@ public class BreadOven : MonoBehaviour
             if (basket.GetBreadCount() < basket.maxAmount) 
             {
                 GameObject bread = objectPool.GetObject(breadPrefab);
-                bread.transform.position = transform.position;
+                bread.transform.position = new Vector3(-5f, 1.9f, -4.56f);
+                Rigidbody rb = bread.GetComponent<Rigidbody>();
+                rb.isKinematic = true;
+
                 bread.SetActive(true);
-                bread.GetComponent<Rigidbody>().velocity = transform.forward * 2f; 
+                
+                yield return new WaitForSeconds(1f);
+                
+                rb.isKinematic = false;
+                rb.velocity = transform.forward * 2f;
+                
+                yield return new WaitForSeconds(0.5f);
+                rb.isKinematic = true;
 
                 basket.AddBread(bread);
             }
